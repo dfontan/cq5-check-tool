@@ -2,16 +2,6 @@
 (function() {
   window.App = Ember.Application.create();
 
-  App.Router.map(function() {});
-
-  App.IndexRoute = Ember.Route.extend({
-    actions: {
-      highlight: function() {
-        return alert();
-      }
-    }
-  });
-
   App.IndexController = Ember.ObjectController.extend({
     orginText: "",
     keyWordStr: "",

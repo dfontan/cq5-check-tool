@@ -1,19 +1,6 @@
 window.App = Ember.Application.create()
 
-App.Router.map ->
-  return
-
-App.IndexRoute = Ember.Route.extend {
-  actions: {
-    highlight: ->
-      alert()
-  }
-}
-
 App.IndexController = Ember.ObjectController.extend {
-  orginText: ""
-  keyWordStr: ""
-
   keyWordArr: (->
     @get("keyWordStr").split "\n"
   ).property "keyWordStr"

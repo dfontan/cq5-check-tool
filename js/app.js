@@ -6,23 +6,36 @@
     orginText: "",
     keyWordStr: "",
     keyWordArr: (function() {
-      return this.get("keyWordStr").split("\n");
+      var arr = this.get("keyWordStr").split("\n");
+      arr.forEach(function(value, index) {
+        arr[index] = arr[index].trim().toLowerCase().replace(/[ \t]+/g, " ");
+      });
+      return arr;
     }).property("keyWordStr"),
+    replacedText: (function() {
+      var str = this.get("orginText").trim();      
+      return str.replace(/[ \t]+/g, " ");
+    }).property("orginText"),
     searchResult: (function() {
-      var orginText, result;
+      var replacedText, result;
       result = [];
-      orginText = this.get("orginText");
+      replacedText = this.get("replacedText");
       this.get("keyWordArr").forEach(function(value) {
-        return result.push({
-          word: value,
-          count: orginText.split(value).length - 1
-        });
+        var word, count;
+        word = value;
+        count = replacedText.toLowerCase().split(word).length - 1;
+        if (count > 0) {
+          result.push({
+            word: value,
+            count: count
+          });
+        }
       });
       return result;
-    }).property("orginText", "keyWordArr"),
+    }).property("replacedText", "keyWordArr"),
     highlightText: (function() {
-      return $("<p>" + (_.escape(this.get("orginText"))) + "</p>").highlight(this.get("keyWordArr")).html();
-    }).property("orginText", "keyWordArr")
+      return $("<p>" + (_.escape(this.get("replacedText"))) + "</p>").highlight(this.get("keyWordArr")).html();
+    }).property("replacedText", "keyWordArr")
   });
 
 }).call(this);
